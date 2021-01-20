@@ -1,0 +1,11 @@
+﻿ActivityId,Title,Location,Budget,ExpectedConductionDate,ActualConductionDate,PrecedingOfficer,Participants
+1,CleanAndGreen,Visakhapatnam,22000,10-11-2020,28-11-2020,Vamsy,Sarat;Suma;Vani
+2,CleanAndGreen,Banglore,40000,11-11-2020,29-11-2020,Vamsy,Mary;Dhamu;Praveen
+3,CleanAndGreen,Vijayawada,30000,12-11-2020,30-11-2020,Vamsy,Rahul;Kala;Sreenu
+4,CleanAndGreen,Pune,35000,13-11-2020,01-12-2020,Vamsy,Sivaji;Mahreen;Subha
+5,OrganicCultivation,Pune,36000,14-11-2020,02-12-2020,Vamsy,Sivaji;Mahreen;Subha
+6,OrganicCultivation,Vijayawada,29000,10-11-2020,30-11-2020,Srinu,Rahul;Kala;Sreenu
+7,PollutionControl,Banglore,20000,11-11-2020,01-12-2020,Srinu,Mary;Dhamu;Praveen
+8,PollutionControl,Visakhapatnam,24500,12-11-2020,02-12-2020,Srinu,Sarat;Suma;Vani
+9,PaperLessDining,Banglore,35000,13-11-2020,28-11-2020,Srinu,Mary;Dhamu;Praveen
+10,PollutionControl,Pune,36000,14-11-2020,29-11-2020,Srinu,Sivaji;Mahreen;Subha
