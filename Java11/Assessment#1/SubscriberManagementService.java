@@ -26,26 +26,8 @@ public class SubscriberManagementService {
 	 *Returns: List<SubscriberVO> having each record as one SubscriberVO object.  
 	 */
 	public List<SubscriberVO> loadAllSubscribers(String fileName) throws SubscriberParseException {
-		List<SubscriberVO> subscribersList = new ArrayList<SubscriberVO>();
-		
-		try(BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-			
-			DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMM-yy");
-			
-			subscribersList = reader.lines().skip(1).map(line -> {
-				String [] parts = line.split(",");
+		List<SubscriberVO> subscribersList = null;
 				
-				return new SubscriberVO(
-						Integer.parseInt(parts[0]), parts[1], parts[2], 
-						Arrays.asList(parts[3].split(";")), 
-						parts[4], LocalDate.parse(parts[5], format), 
-						parts[6]);
-				
-			}).filter(s -> isValidSubscriber(s)).collect(Collectors.toList());
-			
-		} catch(IOException excep) {
-			throw new SubscriberParseException(excep); 
-		}
 		return subscribersList;
 	}
 
@@ -55,13 +37,8 @@ public class SubscriberManagementService {
 	 *Returns: SortedSet<String> of distinct packageNames  
 	 */
 	public SortedSet<String> getDistinctPackages(String fileName) throws SubscriberParseException {
-		TreeSet<String> packagesSet=null;
-		
-		List<SubscriberVO> subscribersList = loadAllSubscribers(fileName);
-				
-		packagesSet=subscribersList.stream().flatMap(s -> s.getPackages().stream())
-				.collect(Collectors.toCollection(()->new TreeSet<String>()));
-		
+		TreeSet<String> packagesSet=null;	
+	
 		return packagesSet;
 	}
 	
@@ -73,57 +50,11 @@ public class SubscriberManagementService {
 	 */
 	public Map<String,List<String>> getPackageWiseSubscribers(String fileName) throws SubscriberParseException {
 		Map<String,List<String>> packageWiseSubscriberNamesMap =null;
-		
-		List<SubscriberVO> subscribersList = loadAllSubscribers(fileName);
-		
-		SortedSet<String> packages = getDistinctPackages(fileName);
-		
-		packageWiseSubscriberNamesMap = packages.stream().collect(Collectors.toMap(
-				Function.identity(),
-				p -> (
-						subscribersList.stream().filter(s->s.getPackages().contains(p))
-						.map(s->s.getFirstName()+" "+s.getLastName())
-						.collect(Collectors.toList())
-					)				
-				));
-						
+								
 		return packageWiseSubscriberNamesMap;
 	}
 
-	private boolean isValidSubscriber(SubscriberVO subscriber) throws InvalidSubscriberException {
-		boolean valid=false;
-		
-		List<String> errors = new ArrayList<String>();
-		
-		if(subscriber!=null) {
-			if (subscriber.getSubscriberId() <= 0) {
-				errors.add("Subscriber Id cannot be 0 or negative");
-			}
-			if (subscriber.getFirstName() == null || subscriber.getFirstName().isBlank() || subscriber.getFirstName().length() < 4 || subscriber.getFirstName().length() > 25) {
-				errors.add("First Name should not be BLANK and should be of 4 to 25 characters in length");
-			}
-			if (subscriber.getLastName() == null || subscriber.getLastName().isBlank() || subscriber.getLastName().length() < 4 || subscriber.getLastName().length() > 25) {
-				errors.add("Last Name should not be BLANK and should be of 4 to 25 characters in length");
-			}
-			if (subscriber.getRegistrationDate() == null || subscriber.getRegistrationDate().isAfter(LocalDate.now())) {
-				errors.add("Registration Date should not be a Future Date");
-			}
-			if (subscriber.getMobileNumber() == null || !subscriber.getMobileNumber().matches("\\d{10}")) {
-				errors.add("Mobile number cannot be null and must be a 10 digit number");
-			}
-			if (subscriber.getBillingTerm() == null || !subscriber.getBillingTerm().matches("Monthly|Annually" )) {
-				errors.add("Billing term cannot be null and should be either Monthly or Annually");
-			}
-				
-		}
-		
-		valid=errors.isEmpty();
-		
-		if(!valid)
-			throw new InvalidSubscriberException(errors.toString());
-		
-		return valid;
-	}
+	
 }
 
 class SubscriberVO {

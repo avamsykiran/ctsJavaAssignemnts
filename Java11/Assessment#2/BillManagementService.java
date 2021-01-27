@@ -28,18 +28,7 @@ public class BillManagementService {
 	public List<BillVO> getBills() {
 		List<BillVO> billsList = null;
 
-		List<SubscriberVO> subscribers = DTHDataRepo.getSubscribers();
-		List<PackageVO> packages = DTHDataRepo.getPackages();
-
-		billsList = subscribers.stream().map(s -> new BillVO(s.getMobileNumber(), s.getRegistrationDate(),
-				("Monthly".equals(s.getBillingTerm()) ? s.getRegistrationDate().plusMonths(1)
-						: s.getRegistrationDate().plusYears(1)),
-				s.getPackages().stream()
-						.map(pnm -> packages.stream().filter(p -> p.getPackageName().equals(pnm)).findFirst().get())
-						.map(p -> "Monthly".equals(s.getBillingTerm()) ? p.getMonthlyFee() : p.getAnnualFee())
-						.reduce((fee1, fee2) -> fee1 + fee2).get(),s.getBillingTerm()))
-				.collect(Collectors.toList());
-
+	
 		return billsList;
 	}
 	
@@ -51,14 +40,6 @@ public class BillManagementService {
 	public List<BillVO> sortBills(List<BillVO> unorderedBillsList) {
 		List<BillVO> orderedBillsList = null;
 
-		orderedBillsList = unorderedBillsList.stream()
-				.sorted((b1,b2) -> {
-					int order = b1.getBillingTerm().compareTo(b2.getBillingTerm());
-					if(order==0) {
-						order = b1.getValidTillDate().compareTo(b2.getValidTillDate());
-					}
-					return order;
-				}).collect(Collectors.toList());
 
 		return orderedBillsList;
 	}
@@ -72,11 +53,7 @@ public class BillManagementService {
 	public List<BillVO> getBillsOnOrBefore(List<BillVO> billsList,LocalDate date) {
 		List<BillVO> filteredBillsList = null;
 
-		filteredBillsList = billsList.stream()
-				.sorted((b1,b2) -> b1.getValidTillDate().compareTo(b2.getValidTillDate()))
-				.takeWhile(b -> !b.getValidTillDate().isAfter(date))
-				.collect(Collectors.toList());
-
+	
 		return filteredBillsList;
 	}
 }
