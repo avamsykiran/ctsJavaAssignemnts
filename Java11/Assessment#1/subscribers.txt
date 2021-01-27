@@ -1,0 +1,11 @@
+SubscriberId,firstName,lastName,Packages,MobileNumber,registrationDate,billingTerm
+101,Srinivas,Dachepalli,SouthPlus;News,9247175830,10-Jan-21,Monthly
+102,Lakshmi,Manchu,SouthPlus;Kids;Sports,9247212345,10-Jan-21,Annually
+103,Sudheer,Yalamanchili,NorthPlus;Sports;Movies,9848012345,11-Jan-21,Annually
+104,Anasuya,Ramalingam,NorthPlus;Kids;Movies,9848023456,11-Jan-21,Monthly
+105,Rashmi,Goutham,SouthPlus;Movies;News,8093466666,12-Jan-21,Monthly
+106,Adi,Hyper,NorthPlus;News,8093477777,12-Jan-21,Monthly
+107,Rakesh,Rocking,SouthPlus;Kids;Sports,8093456565,10-Jan-21,Monthly
+108,Abhi,Attili,SouthPlus;Movies;Kids,8093478789,11-Jan-21,Annually
+109,Ramesh,Rachakonda,NorthPlus;Movies,9247212541,10-Jan-21,Monthly
+110,Dora,Babu,SouthPlus;Sports;Movies;News,9247112350,11-Jan-21,Annually
